@@ -1643,7 +1643,7 @@
     "Minion": {
         "description": "+1 Action<n>Choose one: +2 Coins; or discard your hand, +4 Cards, and each other player with at least 5 cards in hand discards his hand and draws 4 cards.", 
         "extra": "You get +1 Action whichever option you choose. The options are +2 coins, or everything after that - discarding, drawing 4 cards, and other players discarding and drawing. A player who Moats this neither discards nor draws. Other players are only affected by this if they have 5 or more cards in hand. Other players can use Secret Chamber when you play Minion even if they do not have 5 or more cards in hand. [You make your choice on how to use Minion after other players are done revealing Reactions.]", 
-        "name": "Larbin", 
+        "name": "Sługus", 
         "untranslated": "description, extra"
     },
     "Nobles": {
@@ -1691,7 +1691,7 @@
     "Upgrade": {
         "description": "+1 Card<br>+1 Action<n>Trash a card from your hand. Gain a card costing exactly 1 Coin more than it.", 
         "extra": "Draw a card first. Then, you must trash a card from your hand and gain a card costing exactly 1 coin more than the trashed card. The gained card has to be a card in the Supply, and it goes into your discard pile. If there are no cards available for that cost, you do not get one (you still trashed a card though). If you do not have a card in your hand to trash, you neither trash nor gain a card. Card costs are affected by Bridge. Since Bridge affects the costs of the card you trash and then card you gain, in most cases the Bridge will have no net effect. But since cards cannot go below zero in cost, a Bridge played before an Upgrade would allow you to trash a Copper and gain an Estate.", 
-        "name": "Mise à niveau", 
+        "name": "Rozbudowa", 
         "untranslated": "description, extra"
     },
     "Wishing Well": {
