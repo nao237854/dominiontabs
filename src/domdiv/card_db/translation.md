@@ -19,7 +19,6 @@ The files:
     cards_xx.json
     sets_xx.json
     types_xx.json
-
 must be encoded in ISO 8859-15, also known as  "Latin alphabet no. 9"
 This character set is used throughout the Americas, Western Europe, Oceania, and much of Africa.
 It is also commonly used in most standard romanizations of East-Asian languages.
@@ -64,7 +63,6 @@ The items in the `include` list are items that will be marked **bold** (i.e., `<
 when found in the card text in the following format:
 
  `+# item_from_include_list`
-
 as long as this is not followed by a item from the `exclude` list.
 For example in English:
  `+2 Buys` will be made bold, but
@@ -80,7 +78,6 @@ For example in English:
 Entries in this file represent Dominion card types.  A typical entry looks like:
 
     "Action": "Action in new language",
-
 - The type key word (i.e., the `Action` for the above entry) MUST NOT BE CHANGED. This value is used to identify the translation entry.
 - Do not change any punctuation outside of the quotes `"`.  For example, brackets `{` or `}`, colons `:`, quotes `"` or commas `,`.
 
@@ -144,7 +141,6 @@ IMPORTANT: To keep the special images, please do not translate any of the above 
 
 - If bonuses_xx.json for the target language is configured correctly, bonuses within the text will automatically be bolded.
   In English, it will not bold the text if it is followed by `token` or `Token`.  Example:
-
   `Choose one: +3 Cards; or +2 Actions.` will bold `+3 Cards` and `+2 Actions`.
 
 - Bonuses should be listed in the following order:
@@ -159,7 +155,6 @@ IMPORTANT: To keep the special images, please do not translate any of the above 
 
   * `+1 Card<br>+1 Action<br>+1 Buy<br>+1 Coin<br>+2 <VP><n>`
   * `+1 Card\n+1 Action\n+1 Buy\n+1 Coin\n+2 <VP>\n`
-
   The `description` field by default is centered. `<br>`, `<n>`, and `\n` will all provide new lines.
 
 - If a Dividers/Tab has more than one card explanation, if space permits, try to mimic a stand alone Dividers/Tab in the overall format. Example from "Settlers - Bustling Village":
