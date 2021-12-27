@@ -1,3 +1,2 @@
 #!/bin/sh
-
-dominion_dividers --papersize A4 --language pl --front blank --back none --no-page-footer --sleeved-thin --tab-side 'full' --orientation 'vertical' --base-cards-with-expansion --expansion 'prosperity' 'intrigue1stEdition' --edition '1' 
+dominion_dividers --papersize A4 --language pl --front card --back none --no-page-footer --sleeved-thin --tab-side 'left-alternate' --orientation 'horizontal' --base-cards-with-expansion --expansion 'prosperity' 'seaside' 'empires' 'intrigue1stEdition' --edition '1' 
