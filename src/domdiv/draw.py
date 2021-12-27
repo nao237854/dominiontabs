@@ -1479,7 +1479,7 @@ class DividerDrawer(object):
             return
 
         s = getSampleStyleSheet()["BodyText"]
-        s.fontName = "Times-Roman"
+        s.fontName = self.font_mapping["Regular"]
         if divider_text == "card" and not card.isExpansion():
             s.alignment = TA_CENTER
         else:
