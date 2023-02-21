@@ -271,6 +271,7 @@ def main(card_db_dir, output_dir):
     ###########################################################################
     # bonuses_xx files
     ###########################################################################
+    print("asda", languages)
     for lang in languages:
         # Special case for xx.  Reseed from default language
         fromLanguage = lang
