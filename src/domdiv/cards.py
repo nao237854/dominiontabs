@@ -1,5 +1,6 @@
 import json
 import re
+
 from reportlab.lib.units import cm
 
 
@@ -159,6 +160,9 @@ class Card(object):
 
     def isPrize(self):
         return self.isType("Prize")
+
+    def isLandscape(self):
+        return self.getType().getGroupGlobalType() is not None
 
     def get_GroupGlobalType(self):
         return self.getType().getGroupGlobalType()

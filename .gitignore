@@ -11,13 +11,15 @@ dist
 
 .vscode
 
-generated
-src/domdiv/fonts/*.otf
-src/domdiv/fonts/*.ttf
-dominion_dividers.pdf
-dominion_dividers.png
-tools/card_db
+/sumpfork_dividers/
+/src/domdiv/fonts/*.otf
+/src/domdiv/fonts/*.ttf
+/dominion_dividers.pdf
+/dominion_dividers.png
+/tools/card_db
 
-.doit.db
+.doit.db*
 .mypy_cache/
 .tox/
+
+venv

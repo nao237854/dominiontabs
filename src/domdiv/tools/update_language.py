@@ -11,20 +11,21 @@
 # All output is in the designated output directory.  Original files are not overwritten.
 ###########################################################################
 
-import os
-import os.path
-from shutil import copyfile
 import argparse
 import collections
+import gzip
+import os
+from shutil import copyfile
 
 from domdiv.tools.common import (
-    get_json_data,
-    load_language_cards,
-    LANGUAGE_XX,
     LANGUAGE_DEFAULT,
+    LANGUAGE_XX,
+    check_compressed_json_change,
+    get_json_data,
     get_languages,
-    multikeysort,
     load_card_data,
+    load_language_cards,
+    multikeysort,
     write_data,
     write_language_cards,
 )
@@ -65,6 +66,8 @@ def main(card_db_dir, output_dir):
 
     # Get the card data
     type_data = get_json_data(os.path.join(card_db_dir, "types_db.json"))
+    types = set(tuple(t["card_type"]) for t in type_data)
+    assert len(type_data) == len(types), f"{len(type_data)} != {len(types)}"
 
     # Sort the cards by cardset_tags, then card_tag
     sorted_type_data = multikeysort(type_data, ["card_type"])
@@ -87,6 +90,7 @@ def main(card_db_dir, output_dir):
     label_data = get_json_data(os.path.join(card_db_dir, "labels_db.json"))
 
     all_labels = list(set().union(*[set(label["names"]) for label in label_data]))
+
     write_data(label_data, os.path.join(output_dir, "labels_db.json"))
 
     all_labels.sort()
@@ -123,6 +127,11 @@ def main(card_db_dir, output_dir):
             lang_type_default = lang_type_data  # Keep for later languages
 
     sorted_card_data = load_card_data(card_db_dir)
+    seen = set()
+    for c in sorted_card_data:
+        if c["card_tag"] in seen:
+            raise RuntimeError(f"Duplicate card detected: {c['card_tag']}")
+        seen.add(c["card_tag"])
     groups = set(card["group_tag"] for card in sorted_card_data if "group_tag" in card)
     super_groups = set(["events", "landmarks", "projects"])
 
@@ -268,12 +277,18 @@ def main(card_db_dir, output_dir):
         if lang == LANGUAGE_XX:
             fromLanguage = LANGUAGE_DEFAULT
 
-        copyfile(
-            os.path.join(
-                card_db_dir, fromLanguage, "bonuses_" + fromLanguage + ".json"
-            ),
-            os.path.join(output_dir, lang, "bonuses_" + lang + ".json"),
-        )
+        with open(
+            os.path.join(card_db_dir, fromLanguage, "bonuses_" + fromLanguage + ".json")
+        ) as f:
+            data = f.read()
+            output_fname = os.path.join(output_dir, lang, f"bonuses_{lang}.json.gz")
+            if check_compressed_json_change(output_fname, data):
+                with gzip.open(
+                    output_fname,
+                    "wt",
+                    encoding="utf-8",
+                ) as fout:
+                    fout.write(data)
 
     ###########################################################################
     # translation.txt

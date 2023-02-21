@@ -1,8 +1,8 @@
+import distutils.core
 import glob
 import os
-import distutils.core
 
-from domdiv.tools import update_language
+from domdiv.tools import bgg_release, update_language
 
 DOIT_CONFIG = {"default_tasks": ["build"]}
 
@@ -15,7 +15,7 @@ def task_compile_requirements():
     return {
         "file_dep": ["requirements.in"],
         "actions": [
-            "pip-compile requirements.in",
+            "pip-compile -U --no-emit-index-url --resolver=backtracking requirements.in",
             # pip-compile will add macfsevents on mac, which breaks installation
             # on other platforms, so hack in the 'doit' requirement after the
             # compile
@@ -28,10 +28,16 @@ def task_compile_requirements():
 def task_update_languages():
     files = glob.glob("card_db_src/**/*.json") + glob.glob("card_db_src/*.json")
     return {
-        "file_dep": files + ["src/domdiv/tools/update_language.py"],
+        "file_dep": files
+        + ["src/domdiv/tools/update_language.py", "src/domdiv/tools/common.py"],
         "actions": [lambda: update_language.main("card_db_src", "src/domdiv/card_db")],
         "targets": [
-            os.path.join( "src/domdiv/card_db", os.sep.join(fname.split(os.sep)[1:]))
+            os.path.join(
+                "src",
+                "domdiv",
+                "card_db",
+                os.path.sep.join(fname.split(os.path.sep)[1:]),
+            )
             for fname in files
         ],
         "clean": True,
@@ -52,6 +58,10 @@ def task_build():
             lambda: True if distutils.core.run_setup("setup.py", "sdist") else False
         ],
     }
+
+
+def task_make_bgg_release():
+    return {"actions": [lambda: bgg_release.make_bgg_release()]}
 
 
 def task_test():

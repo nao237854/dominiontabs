@@ -1,13 +1,14 @@
 from __future__ import print_function
-import shutil
-import os
+
 import contextlib
+import os
+import shutil
 import unicodedata
 
 import pytest
 
-from domdiv import main
 from domdiv import cards as domdiv_cards
+from domdiv import main
 
 
 @pytest.fixture
@@ -22,40 +23,55 @@ def rmtestcardb(request):
 
 
 def test_cardread():
-    num_cards_expected = 647
+    num_cards_expected = 958
 
     options = main.parse_opts([])
     options.data_path = "."
     cards = main.read_card_data(options)
     assert len(cards) == num_cards_expected
     valid_cardsets = {
-        u"base",
-        u"dominion1stEdition",
-        u"dominion2ndEdition",
-        u"dominion2ndEditionUpgrade",
-        u"intrigue1stEdition",
-        u"intrigue2ndEdition",
-        u"intrigue2ndEditionUpgrade",
-        u"seaside",
-        u"alchemy",
-        u"prosperity",
-        u"cornucopia extras",
-        u"cornucopia",
-        u"hinterlands",
-        u"dark ages",
-        u"dark ages extras",
-        u"guilds",
-        u"adventures",
-        u"adventures extras",
-        u"empires",
-        u"empires extras",
-        u"nocturne",
-        u"nocturne extras",
-        u"promo",
-        u"renaissance",
-        u"menagerie",
-        u"extras",
-        u"animals",
+        "base",
+        "dominion1stEdition",
+        "dominion1stEditionRemoved",
+        "dominion2ndEdition",
+        "dominion2ndEditionUpgrade",
+        "intrigue1stEdition",
+        "intrigue1stEditionRemoved",
+        "intrigue2ndEdition",
+        "intrigue2ndEditionUpgrade",
+        "seaside1stEdition",
+        "seaside1stEditionRemoved",
+        "seaside2ndEdition",
+        "seaside2ndEditionUpgrade",
+        "alchemy",
+        "prosperity1stEdition",
+        "prosperity1stEditionRemoved",
+        "prosperity2ndEdition",
+        "prosperity2ndEditionUpgrade",
+        "cornucopia extras",
+        "cornucopia",
+        "hinterlands1stEdition",
+        "hinterlands1stEditionRemoved",
+        "hinterlands2ndEdition",
+        "hinterlands2ndEditionUpgrade",
+        "dark ages",
+        "dark ages extras",
+        "guilds",
+        "guilds-bigbox2-de",
+        "adventures",
+        "adventures extras",
+        "empires",
+        "empires extras",
+        "nocturne",
+        "nocturne extras",
+        "plunder",
+        "promo",
+        "promo-bigbox2-de",
+        "renaissance",
+        "menagerie",
+        "extras",
+        "animals",
+        "allies",
     }
     for c in cards:
         assert isinstance(c, domdiv_cards.Card)
@@ -127,6 +143,7 @@ def test_only_type():
     #      Blank:         +5 added in options
     #      Curse:         +1 from base
     #      Action Attack: +2 from Alchemy
+    print(cards)
     assert len(cards) == 8
 
 
@@ -185,8 +202,10 @@ def test_exclude_expansion():
     card_sets = set(x.cardset.lower() for x in cards)
     assert card_sets == {
         "adventures",
+        "dominion 1st edition removed",
         "dominion 2nd edition upgrade",
         "intrigue 1st edition",
+        "intrigue 1st edition removed",
     }
 
 
@@ -197,7 +216,7 @@ def test_expansion_description_card_order():
     options = main.parse_opts(
         [
             "--expansions",
-            "Hinterlands",
+            "hinterlands1stEdition",
             "--expansion-dividers",
             "--language",
             "fr",
