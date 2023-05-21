@@ -1524,20 +1524,26 @@ class DividerDrawer(object):
 
         # whitespace
         safety = 1  # empty zone inside tab edge
-        padding = 3  # minimum space around text
-        margin = 0  # space for banner/frame artwork, if any
+        padding = 10  # minimum space around text
         # most non-landscape cards have 2.5mm margins in 52.5mm banners
         marginRatio = 2.5 / 52.5
+        margin = (
+            tabWidth - 2 * safety
+        ) * marginRatio  # space for banner/frame artwork, if any
 
         # metrics from the package assets
         cardType = card.getType()
+
         if artwork:
             # adjust dimensions based on the application image metrics
             bannerHeight += cardType.getTabTextHeightOffset() * tabScale
             # fit text inside banner/frame graphics
-            margin = (tabWidth - 2 * safety) * marginRatio
             if card.get_GroupGlobalType() in ("Events", "Landmarks", "Projects"):
                 margin *= 1.75
+        else:
+            bannerHeight = (
+                bannerHeight + (tabHeight - tabScale * 18 * 0.624 - 4 * tabScale) / 4
+            )
 
         # cost symbol metrics
         coinHeight = bannerHeight
@@ -1706,6 +1712,7 @@ class DividerDrawer(object):
                 "Night" in card.types
                 and "Action" not in card.types
                 and "Duration" not in card.types
+                and not self.options.no_tab_artwork
             ):
                 self.canvas.setFillColorRGB(1, 1, 1)
             self.drawSmallCaps(line, fontSize, w, h, style=style)
